@@ -1,8 +1,7 @@
-from difflib import unified_diff
 from ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR, colorize_line
-def find_and_print_differences(actual_output, expected_output):
-    lines_actual = actual_output.splitlines()
-    lines_expected = expected_output.splitlines()
+def find_and_print_differences(actual_text, expected_text):
+    lines_actual = actual_text.splitlines()
+    lines_expected = expected_text.splitlines()
 
     max_len = max(len(lines_actual), len(lines_expected))
     
