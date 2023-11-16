@@ -4,12 +4,12 @@
 
 The given autograder expects that there is a directory containing all the files under test in following order -
 
-    root_folder
-        |---- roll1
+    root_folder/
+        |---- roll1/
         |       |---- file1.cpp
         |       |---- file2.cpp
         |       |---- some_filename_to_match.cpp
-        |---- roll2
+        |---- roll2/
         |       |---- file1.cpp
             ...
 
