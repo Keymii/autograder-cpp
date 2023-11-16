@@ -1,8 +1,5 @@
 from difflib import unified_diff
-from ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR
-def colorize_line(line, color_code):
-    return f"\033[{color_code}m{line}\033[0m"
-
+from ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR, colorize_line
 def find_and_print_differences(actual_output, expected_output):
     lines_actual = actual_output.splitlines()
     lines_expected = expected_output.splitlines()

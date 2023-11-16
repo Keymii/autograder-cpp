@@ -17,6 +17,9 @@ FOREGROUND_COLORS={
     "bright_magenta":95,
     "bright_cyan":96,
     "bright_white":97,
+    "bold":1,
+    "italic":3,
+    "underline":4,
 }
 BACKGROUND_COLORS={
     "black":40,
@@ -44,3 +47,6 @@ TEXT_EXPECTED_COLOR = FOREGROUND_COLORS['bright_green']
 TEXT_FOUND_COLOR = FOREGROUND_COLORS['bright_red']
 TEST_PASSED_COLOR=BACKGROUND_COLORS['green']
 TEST_FAILED_COLOR= BACKGROUND_COLORS['magenta']
+
+def colorize_line(line, color_code):
+    return f"\033[{color_code}m{line}\033[0m"

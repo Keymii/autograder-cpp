@@ -17,11 +17,12 @@ Roll is the unique identification string of each submitter.
 
 The autograder looks for every folder/roll in the root folder and checks for the first file whose filename contains the keyword ```filename_to_match```, a parameter to the helper function ```search_cpp_files(root_folder, filename_to_match)```. If found, the file is tested under the provided input and output cases. Otherwise, absent is marked.
 
-<!-- ## Modes
+## Modes
 
-- **Concise:** Only shows if the testcase was passed or failed
+- **Summary:**  Only shows the net number of test cases passed
+- **Concise:** Shows whether the testcase was passed or failed
 - **Standard:** Shows passed if test case was passed, shows line-by-line comparision of actual and expected outputs if test case was failed
-- **Verbose:** Shows line-by-line comparision of actual and expected outputs for each test case -->
+- **Verbose:** Shows line-by-line comparision of actual and expected outputs for each test case
 
 ## Instructions
 

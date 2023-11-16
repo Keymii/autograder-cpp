@@ -1,8 +1,8 @@
 import subprocess
 from file_handler import search_cpp_files, read_test_cases
-from diff import find_and_print_differences, colorize_line
+from diff import find_and_print_differences
 import ansi_colors
-def run_test(input_str, expected_output, question_path,timeout_sec = 5): 
+def run_test(input_str, expected_output, question_path,timeout_sec, run_mode="standard"): 
     # If no output found, wait for timeout_sec = 5 seconds before throwing a timeout and moving on. This ensures program moves on even if DUT is stuck in infinite loop
 
     # Compile the C++ code
@@ -17,28 +17,37 @@ def run_test(input_str, expected_output, question_path,timeout_sec = 5):
         # Check if the output matches the expected output
         actual_output = process.stdout.strip()
         passFlag =  actual_output == expected_output.strip()
-        # if not passFlag:
-        find_and_print_differences(actual_output,expected_output)
+        if (run_mode=="standard" and not passFlag) or run_mode=="verbose":
+            find_and_print_differences(actual_output,expected_output)
         return passFlag
     except subprocess.TimeoutExpired:
-        print(colorize_line(f"Test case timed out after {timeout_sec} seconds.",ansi_colors.ERROR_COLOR))
+        if run_mode!= "summary":
+            print(ansi_colors.colorize_line(f"Test case timed out after {timeout_sec} seconds.",ansi_colors.ERROR_COLOR))
         return False
 
-def autograde(path, input_test_cases, output_test_cases):
+def autograde(path, input_test_cases, output_test_cases, run_mode="standard", timeout_sec=5):
     enumerated_test_cases = enumerate(zip(input_test_cases, output_test_cases), 1)
+    total_cases = len(input_test_cases)
+    num_test_passed = 0
     for i, (input_str, expected_output) in enumerated_test_cases:
         try:
-            print(colorize_line(f"\nEvaluating test case {i}\n",ansi_colors.TEST_EVAL_COLOR))
-            testSuccess = run_test(input_str, expected_output, path) 
+            if run_mode != "summary":
+                print(ansi_colors.colorize_line(f"\nEvaluating test case {i}\n",ansi_colors.FOREGROUND_COLORS['underline']), end='' if run_mode == "concise" else '\n')
+            testSuccess = run_test(input_str=input_str, expected_output=expected_output, question_path=path, run_mode=run_mode, timeout_sec=timeout_sec) 
+            num_test_passed+=testSuccess
         except Exception as e:
             testSuccess = False
-            print(colorize_line("An error occured while evaluting the test case", ansi_colors.ERROR_COLOR))
-            print(e)
-        if testSuccess:
-            print(colorize_line(f"Test case {i}: Passed", ansi_colors.TEST_PASSED_COLOR))
-        else:
-            print(colorize_line(f"Test case {i}: Failed", ansi_colors.TEST_FAILED_COLOR))
-        print()
+            if run_mode != "summary":
+                print(ansi_colors.colorize_line("An error occured while evaluting the test case", ansi_colors.ERROR_COLOR))
+                print(e)
+        if run_mode != "summary":
+            if testSuccess:
+                print(ansi_colors.colorize_line(f"Test case {i}: Passed", ansi_colors.TEST_PASSED_COLOR))
+            else:
+                print(f"Test case {i}: Failed")
+            if run_mode != "concise":
+                print()
+    print(ansi_colors.colorize_line(f"Passed {num_test_passed}/{total_cases}",ansi_colors.BACKGROUND_COLORS['blue']))
         
 if __name__ == "__main__":
     file_paths = search_cpp_files('../Day4_Thurs_9_Nov-20231110T172808Z-001', 'Q1')
