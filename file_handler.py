@@ -1,7 +1,27 @@
 from pathlib import Path
 from diff import  colorize_line
-from ansi_colors import ERROR_COLOR
+import ansi_colors
 def search_cpp_files(root_folder, filename_to_match):
+    """The given function expects that there is a directory of following order -\n
+\t root_folder\n
+\t\t    |-- roll1\n
+\t\t    | |---- file1.cpp\n
+\t\t    | |---- file2.cpp\n
+\t\t    | |---- some_filename_to_match.cpp\n
+\t\t    |--roll2\n
+\t\t    | |---- file1.cpp\n
+\t\t    ...
+    
+    roll is the unique identification string of the submitter 
+    
+    The function looks for every folder/roll in the root folder and checks for the first file with filename containing the keyword filename_to_match. If found, the path to it is returned along with the roll of the person. If for a given roll no such file found, the function returns absent corresponding to the path for the roll.
+    Args:
+        root_folder (str): path to the directory containing folders and files under test
+        filename_to_match (str): the unique keyword/pattern in file names
+
+    Returns:
+        dict: key: name of folder/roll: path to file
+    """
     root = Path(root_folder)
     cpp_file_path_dict={}
     for roll_number_path in root.iterdir():
@@ -37,10 +57,11 @@ def read_test_cases(file_path):
                 file_category = "output"
         else:
             test_cases[-1] += line
-        return test_cases
+    file.close()
+    return test_cases
     
 class TestBenchValidationException(Exception):
     def __init__(self, message):
         self.message = message
     def __str__(self) -> str:
-        return colorize_line(self.message, ERROR_COLOR)
+        return colorize_line(self.message, ansi_colors.ERROR_COLOR)
