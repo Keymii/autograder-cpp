@@ -6,7 +6,7 @@ def run_test(input_str, expected_output, question_path,timeout_sec, run_mode="st
     # If no output found, wait for timeout_sec = 5 seconds before throwing a timeout and moving on. This ensures program moves on even if DUT is stuck in infinite loop
 
     # Compile the C++ code
-    compile_command = "s++ " + str(question_path)
+    compile_command = "g++ " + str(question_path)
     # print(compile_command)
     subprocess.run(compile_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     # Run the compiled program with input
