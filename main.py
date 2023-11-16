@@ -1,6 +1,9 @@
-import autograder
-import file_handler
-import ansi_colors
+import sys
+sys.path.insert(1, './autogradecpp')# caution: path[0] is reserved for script path (or '' in REPL)
+import autogradecpp.autograder as autograder
+import autogradecpp.file_handler as file_handler
+import autogradecpp.ansi_colors as ansi_colors
+
 
 ROOT_FOLDER_PATH = '../Day4_Thurs_9_Nov-20231110T172808Z-001'
 FILENAME_TO_MATCH = 'Q1' 
