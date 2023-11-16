@@ -1,5 +1,5 @@
 import subprocess
-from pathlib import Path
+from file_handler import search_cpp_files, read_test_cases
 from diff import find_and_print_differences, colorize_line
 from ansi_colors import ERROR_COLOR, TEST_EVAL_COLOR
 def run_test(input_str, expected_output, question_path):
@@ -8,55 +8,22 @@ def run_test(input_str, expected_output, question_path):
     compile_command = "s++ " + str(question_path)
     # print(compile_command)
     subprocess.run(compile_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    
     # Run the compiled program with input
     run_command = f"./a.out"
-
     # If no output found, wait for 5 seconds before throwing a timeout and moving on. This ensures program moves on even if DUT is stuck in infinite loop
     timeout_sec=5
-    
 
     try:
         process = subprocess.run(run_command, input=input_str, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout = timeout_sec)
-    
         # Check if the output matches the expected output
         actual_output = process.stdout.strip()
-
         passFlag =  actual_output == expected_output.strip()
         if not passFlag:
             find_and_print_differences(actual_output,expected_output)
-
         return passFlag
     except subprocess.TimeoutExpired:
         print(colorize_line(f"Test case timed out after {timeout_sec} seconds.",ERROR_COLOR))
         return False
-
-def read_test_cases(file_path):
-
-    file = open(file_path, "r") 
-    lines = file.readlines()
-    
-    test_cases = []
-
-    file_category = None
-    for line in lines:
-        if line.startswith("#testcase_input"):
-            if file_category == "output":
-                raise TestBenchValidationException("Input values found in output test case file, please check the test files")
-            test_cases.append("")
-            if file_category == None:
-                file_category = "input"
-            
-        elif line.startswith("#testcase_output"):
-            if file_category == "input":
-                raise TestBenchValidationException("Output values found in input test case file, please check the test files")
-            test_cases.append("")
-            if file_category == None:
-                file_category = "output"
-        else:
-            test_cases[-1] += line
-    
-    return test_cases
 
 def autograde(path):
     input_test_cases = read_test_cases("./testbenchi.txt")
@@ -74,27 +41,6 @@ def autograde(path):
             print(f"Test case {i}: Passed\n")
         else:
             print(f"Test case {i}: Failed\n")
-
-def search_cpp_files(root_folder, filename_to_match):
-    root = Path(root_folder)
-    cpp_file_path_dict={}
-    for roll_number_path in root.iterdir():
-        if roll_number_path.is_dir():
-            found = False
-            for file_path in roll_number_path.rglob('*.cpp'):
-                if filename_to_match in file_path.name:
-                    cpp_file_path_dict[roll_number_path.name]=file_path
-                    found = True
-                    break
-            if not found:
-                cpp_file_path_dict[roll_number_path.name]="absent"
-    return cpp_file_path_dict
-
-class TestBenchValidationException(Exception):
-    def __init__(self, message):
-        self.message = message
-    def __str__(self) -> str:
-        return colorize_line(self.message, ERROR_COLOR)
         
 if __name__ == "__main__":
     file_paths = search_cpp_files('../Day4_Thurs_9_Nov-20231110T172808Z-001', 'Q3b')
@@ -105,5 +51,3 @@ if __name__ == "__main__":
         print(message)
         if path !="absent":
             autograde(path)
-
-
