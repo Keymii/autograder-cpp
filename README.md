@@ -2,7 +2,7 @@
 
 ## Overview
 
-The given autograder expects that there is a directory containing all the files under test in following order -
+The program expects that there is a directory containing all the files under test in following order -
 
     root_folder/
         |---- roll1/
@@ -28,8 +28,8 @@ The autograder looks for every folder/roll in the root folder and checks for the
 
 | :exclamation:  Make sure you have g++ compiler installed on your system before running the autograder|
 |-----------------------------------------|
-1. Create an input file and separate input test cases using a line containing ```#testcase_input``` keyword
-2. Create an output file and separate inputcases using a line containing ```#testcase_output``` keyword
+1. Create an *.txt file containing sample inputs and separate the input test cases using a line containing ```#testcase_input``` as the beginnig keyword
+2. Create an *.txt file containing expected outputs and separate the test cases using a line containing ```#testcase_output``` as the beginning keyword
 3. Specify the required data in the variables declared in main.py
 4. Run ```main.py``` 
 
