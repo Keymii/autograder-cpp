@@ -37,7 +37,7 @@ The autograder looks for every folder/roll in the root folder and checks for the
 
  Below are some helper functions whose usability, I believe, can be expanded beyond just this autograder.
 
-- main.py contains ```grade_root(args*)``` which runs the assembled process of finding files and grading every single roll.
+- autograder.py contains ```grade_root_dir(args*)``` which runs the assembled process of finding files and grading every single roll.
 - file_handler.py contains ```read_test_cases(str)``` which returns the test case inputs and expected outputs into an array readable by autograder. It has to be run separately for input file and output file. 
 - autograder.py contains ```autograde(args*)``` which can run the testbench on one file at a time
 - diff.py contains ```find_and_print_differences(actual_text, expected_text)``` which compares the texts line by line
