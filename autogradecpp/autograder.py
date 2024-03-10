@@ -7,18 +7,18 @@ from exceptions import GccCompilerException
 class AutograderCpp:
 
     """
-    List of supported run_modes:
+    List of supported run_modes (case sensitive):
     - verbose
     - standard
-    - summary
     - concise
-    (case sensitive)
+    - summary
+
     """
 
     def __init__(self, run_mode:str="standard", timeout_sec:float=5, base_path:str="") -> None:
         self.configure(run_mode=run_mode, timeout_sec=timeout_sec, base_path=base_path)
         if not self.check_gcc_installed():
-            raise GccCompilerException("Could not detect an installed instance of GCC, GNU Compiler Collection. Please check the compiler and try again.")
+            raise GccCompilerException("Could not detect an installed instance of gcc/g++. Please check the compiler and try again.")
 
     def configure(self, run_mode:str="standard", timeout_sec:float=5, base_path:str="") -> None:
         self.run_mode = run_mode
@@ -27,7 +27,7 @@ class AutograderCpp:
 
     def check_gcc_installed(self):
         try:
-            subprocess.run(['gcc', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            subprocess.run(['g++', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
             return True
         except subprocess.CalledProcessError:
             return False
