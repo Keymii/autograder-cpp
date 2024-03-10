@@ -1,5 +1,5 @@
 from ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR, colorize_line
-def find_and_print_differences(actual_text, expected_text):
+def find_and_print_differences(actual_text:str, expected_text:str) -> None:
     lines_actual = actual_text.splitlines()
     lines_expected = expected_text.splitlines()
 

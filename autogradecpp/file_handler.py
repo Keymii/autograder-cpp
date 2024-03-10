@@ -1,7 +1,7 @@
 from pathlib import Path
 from diff import  colorize_line
 import ansi_colors
-def search_cpp_files(root_folder, filename_to_match):
+def search_cpp_files(root_folder:str, filename_to_match:str) -> dict:
     """The given function expects that there is a directory of following order -\n
 \t root_folder\n
 \t\t    |-- roll1\n
@@ -36,7 +36,7 @@ def search_cpp_files(root_folder, filename_to_match):
                 cpp_file_path_dict[roll_number_path.name]="absent"
     return cpp_file_path_dict
 
-def read_test_cases(file_path):
+def read_test_cases(file_path:str) -> list[str]:
     file = open(file_path, "r") 
     lines = file.readlines()
     test_cases = []
@@ -61,7 +61,7 @@ def read_test_cases(file_path):
     return test_cases
     
 class TestBenchValidationException(Exception):
-    def __init__(self, message):
+    def __init__(self, message:str) -> None:
         self.message = message
     def __str__(self) -> str:
         return colorize_line(self.message, ansi_colors.ERROR_COLOR)
