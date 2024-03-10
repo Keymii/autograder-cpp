@@ -1,6 +1,7 @@
 from pathlib import Path
+from exceptions import TestBenchValidationException
 from diff import  colorize_line
-import ansi_colors
+
 def search_cpp_files(root_folder:str, filename_to_match:str) -> dict:
     """The given function expects that there is a directory of following order -\n
 \t root_folder\n
@@ -59,9 +60,3 @@ def read_test_cases(file_path:str) -> list[str]:
             test_cases[-1] += line
     file.close()
     return test_cases
-    
-class TestBenchValidationException(Exception):
-    def __init__(self, message:str) -> None:
-        self.message = message
-    def __str__(self) -> str:
-        return colorize_line(self.message, ansi_colors.ERROR_COLOR)

@@ -2,6 +2,7 @@ import subprocess
 from file_handler import search_cpp_files, read_test_cases
 from diff import find_and_print_differences
 import ansi_colors
+from exceptions import GccCompilerException
 
 class AutograderCpp:
 
@@ -16,12 +17,20 @@ class AutograderCpp:
 
     def __init__(self, run_mode:str="standard", timeout_sec:float=5, base_path:str="") -> None:
         self.configure(run_mode=run_mode, timeout_sec=timeout_sec, base_path=base_path)
+        if not self.check_gcc_installed():
+            raise GccCompilerException("Could not detect an installed instance of GCC, GNU Compiler Collection. Please check the compiler and try again.")
 
     def configure(self, run_mode:str="standard", timeout_sec:float=5, base_path:str="") -> None:
         self.run_mode = run_mode
         self.timeout_sec = timeout_sec
         self.base_path=base_path
 
+    def check_gcc_installed(self):
+        try:
+            subprocess.run(['gcc', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            return True
+        except subprocess.CalledProcessError:
+            return False
 
     def run_test(self,input_str:str, expected_output:str, question_path:str) -> bool: 
         # If no output found, wait for timeout_sec (default 5) seconds before throwing a timeout and moving on. This ensures program moves on even if DUT is stuck in infinite loop
@@ -82,7 +91,6 @@ class AutograderCpp:
             if path !="absent":
                 self.autograde(path, input_test_cases, output_test_cases)
     
-
 if __name__ == "__main__":
     autograder = AutograderCpp(base_path='/media/keymii/SecondBox/autograder/', run_mode='concise', timeout_sec=1)
     autograder.grade_root_dir("Day4_Thurs_9_Nov-20231110T172808Z-001", "Q1", "testbenchi.txt", "testbencho.txt" )
