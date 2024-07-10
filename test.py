@@ -1,4 +1,4 @@
-from autogradecpp import autograder, file_handler, ansi_colors
+from autogradercpp import autograder, file_handler, ansi_colors
 
 BASE_PATH = 'base-path/'
 ROOT_FOLDER_PATH = 'root-folder/'
