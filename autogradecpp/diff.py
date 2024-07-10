@@ -1,4 +1,5 @@
-from ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR, colorize_line
+from autogradecpp.ansi_colors import TEXT_FOUND_COLOR, TEXT_EXPECTED_COLOR, colorize_line
+
 def find_and_print_differences(actual_text:str, expected_text:str) -> None:
     lines_actual = actual_text.splitlines()
     lines_expected = expected_text.splitlines()
@@ -15,15 +16,3 @@ def find_and_print_differences(actual_text:str, expected_text:str) -> None:
             print(f"{i:<7}| {line_actual_colored.ljust(29)} | {line_expected_colored}")
         else:
             print(f"{i:<7}| {line_actual.ljust(20)} | {line_expected}")
-
-if __name__=="__main__":
-# Example usage:
-    actual_output = """Line 1
-Line 2
-Line 3"""
-
-    expected_output = """Line 1
-Modified Line 2
-Line 3"""
-
-    find_and_print_differences(actual_output, expected_output)

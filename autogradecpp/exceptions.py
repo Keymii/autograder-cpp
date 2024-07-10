@@ -1,5 +1,4 @@
-import ansi_colors
-
+from autogradecpp import ansi_colors
 class TestBenchValidationException(Exception):
     def __init__(self, message:str) -> None:
         self.message = message

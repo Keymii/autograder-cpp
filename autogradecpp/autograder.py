@@ -1,8 +1,8 @@
 import subprocess
-from file_handler import search_cpp_files, read_test_cases
-from diff import find_and_print_differences
-import ansi_colors
-from exceptions import GccCompilerException
+from autogradecpp.file_handler import search_cpp_files, read_test_cases
+from autogradecpp.diff import find_and_print_differences
+from autogradecpp import ansi_colors
+from autogradecpp.exceptions import GccCompilerException
 
 class AutograderCpp:
 
@@ -27,7 +27,12 @@ class AutograderCpp:
 
     def check_gcc_installed(self):
         try:
-            subprocess.run(['g++', '--version'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            subprocess.run(
+                ['g++', '--version'], 
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE, 
+                check=True
+                )
             return True
         except subprocess.CalledProcessError:
             return False
@@ -90,7 +95,3 @@ class AutograderCpp:
             print(message)
             if path !="absent":
                 self.autograde(path, input_test_cases, output_test_cases)
-    
-if __name__ == "__main__":
-    autograder = AutograderCpp(base_path='/media/keymii/SecondBox/autograder/', run_mode='concise', timeout_sec=1)
-    autograder.grade_root_dir("Day4_Thurs_9_Nov-20231110T172808Z-001", "Q1", "testbenchi.txt", "testbencho.txt" )

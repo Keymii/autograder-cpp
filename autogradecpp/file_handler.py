@@ -1,17 +1,17 @@
 from pathlib import Path
-from exceptions import TestBenchValidationException
-from diff import  colorize_line
+from autogradecpp.exceptions import TestBenchValidationException
 
 def search_cpp_files(root_folder:str, filename_to_match:str) -> dict:
-    """The given function expects that there is a directory of following order -\n
-\t root_folder\n
-\t\t    |-- roll1\n
-\t\t    | |---- file1.cpp\n
-\t\t    | |---- file2.cpp\n
-\t\t    | |---- some_filename_to_match.cpp\n
-\t\t    |--roll2\n
-\t\t    | |---- file1.cpp\n
-\t\t    ...
+    """The given function expects that there is a directory of following order -
+
+        root_folder/\n
+            |-- roll1/\n
+            | |---- file1.cpp\n
+            | |---- file2.cpp\n
+            | |---- some_filename_to_match.cpp\n
+            |--roll2/\n
+            | |---- file1.cpp\n
+            ...
     
     roll is the unique identification string of the submitter 
     

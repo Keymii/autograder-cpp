@@ -4,16 +4,21 @@
 
 The program expects that there is a directory containing all the files under test in following order -
 
-    root_folder/
-        |---- roll1/
-        |       |---- file1.cpp
-        |       |---- file2.cpp
-        |       |---- some_filename_to_match.cpp
-        |---- roll2/
-        |       |---- file1.cpp
-            ...
+    base_path/
+        |---- some_path1/testbenchi.txt
+        |---- some_path2/testbencho.txt
+        |---- some_path3/root_folder/
+                    |---- roll1/
+                    |       |---- file1.cpp
+                    |       |---- file2.cpp
+                    |       |---- some_filename_to_match.cpp
+                    |---- roll2/
+                    |       |---- file1.cpp
+                        ...
 
-Roll is the unique identification string of each submitter.
+In most cases `base_path` could be kept an empty string.  
+
+`Roll` is the unique identification string of each submitter.
 
 The autograder looks for every folder/roll in the root folder and checks for the first file whose filename contains the keyword ```filename_to_match```, a parameter to the helper function ```search_cpp_files(root_folder, filename_to_match)```. If found, the file is tested under the provided input and output cases. Otherwise, absent is marked.
 
