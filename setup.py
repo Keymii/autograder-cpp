@@ -10,7 +10,7 @@ setup(
     packages=find_packages(
         include=['autogradercpp']
     ),
-    version='0.1.2',
+    version='0.1.3',
     description='An autograder library for evaluating C++ programs.',
     author='Abhijat Bharadwaj (Keymii)',
     author_email='bharadwaj.abhijat@yahoo.com',
@@ -21,5 +21,8 @@ setup(
     ],
     install_requires=[],
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
+    project_urls = {
+        'GitHub':'https://github.com/Keymii/autograder-for-cpp'
+    }
 )
