@@ -10,7 +10,7 @@ setup(
     packages=find_packages(
         include=['autogradercpp']
     ),
-    version='0.1.3',
+    version='0.1.4',
     description='An autograder library for evaluating C++ programs.',
     author='Abhijat Bharadwaj (Keymii)',
     author_email='bharadwaj.abhijat@yahoo.com',
