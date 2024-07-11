@@ -35,12 +35,29 @@ The autograder looks for every folder/roll in the root folder and checks for the
 |-----------------------------------------|
 1. Create an *.txt file containing sample inputs and separate the input test cases using a line containing ```#testcase_input``` as the beginnig keyword
 2. Create an *.txt file containing expected outputs and separate the test cases using a line containing ```#testcase_output``` as the beginning keyword
-3. Specify the required data in the variables declared in main.py
-4. Run ```main.py``` 
+3. Execute the following program with proper parameters
+
+```python
+from autogradercpp.autograder import AutograderCpp
+
+autograder = AutograderCpp(
+        base_path=BASE_PATH, 
+        run_mode=RUN_MODE, 
+        timeout_sec=WAIT_TIMEOUT_SEC
+    )
+
+autograder.grade_root_dir(
+        ROOT_FOLDER_PATH, 
+        FILENAME_TO_MATCH, 
+        TEST_INPUT_FILE_PATH, 
+        TEST_OUTPUT_FILE_PATH 
+    )
+```
+
 
 ## Some Helper Functions
 
- Below are some helper functions whose usability, I believe, can be expanded beyond just this autograder.
+Below are some helper functions whose usability, I believe, can be expanded beyond just this autograder.
 
 - autograder.py contains ```grade_root_dir(args*)``` which runs the assembled process of finding files and grading every single roll.
 - file_handler.py contains ```read_test_cases(str)``` which returns the test case inputs and expected outputs into an array readable by autograder. It has to be run separately for input file and output file. 
